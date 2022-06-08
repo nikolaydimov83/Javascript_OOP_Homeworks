@@ -1,7 +1,8 @@
 //Will implement it with recursion
 
-function htmlParser(){
-    this.selector = ".birds";
+function htmlParser(selector){
+let parsedText='';    
+this.selector = selector;
 let htmlDoc=document.querySelectorAll(this.selector)
 function textToPrint(element,blankspace){
     let text=blankspace+element.tagName+`: `;
@@ -13,7 +14,7 @@ function textToPrint(element,blankspace){
     }
     return text;
 }
-let parsedText='';
+
 function elementTraversal(element,blankspace){
     let newBlankspace;
     let arrayOfChildren=element.childNodes
