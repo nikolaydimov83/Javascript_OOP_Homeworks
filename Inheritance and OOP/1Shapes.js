@@ -29,8 +29,11 @@ class Circle extends Shape{
         this.radius=radius;
     }
 }
-Circle.prototype.draw=function(){
-    
+Circle.prototype.draw=function(ctx,x,y,r,color){
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
 }
 
 class Rectangle extends Shape{
