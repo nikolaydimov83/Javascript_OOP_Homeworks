@@ -10,22 +10,21 @@ function isHexaDecimal(hexaNumber){
 
 
 class Shape{
-    constructor(x,y,color1){
+    constructor(x,y,color){
         this.x=x
         this.y=y
+        this.setColor(color)
         /*if (isHexaDecimal(color)){
             this.color=color;
         }else{
             throw Error('Color must be in Hexadecimal format')
         }*/
-     this.color=color1;   
+     
     }
-    /**
-     * @param {any} color1
-     */
-    set color(color1) {
-        if (isHexaDecimal(color1)){
-            this.color=color1;
+
+    setColor(color) {
+        if (isHexaDecimal(color)){
+            this.color=color;
         }else{
             throw Error('Color must be in Hexadecimal format')
         }
