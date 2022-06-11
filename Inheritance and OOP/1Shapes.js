@@ -7,16 +7,28 @@ function isHexaDecimal(hexaNumber){
 }
 
 
+
+
 class Shape{
-    constructor(x,y,color){
+    constructor(x,y,color1){
         this.x=x
         this.y=y
-        if (isHexaDecimal(color)){
+        /*if (isHexaDecimal(color)){
             this.color=color;
         }else{
             throw Error('Color must be in Hexadecimal format')
+        }*/
+     this.color=color1;   
+    }
+    /**
+     * @param {any} color1
+     */
+    set color(color1) {
+        if (isHexaDecimal(color1)){
+            this.color=color1;
+        }else{
+            throw Error('Color must be in Hexadecimal format')
         }
-        
     }
     draw(){
         console.log('Waiting to draw')
@@ -95,7 +107,16 @@ class Point extends Shape{
 }
 Point.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
-    ctx.fillRect(this.x1,this.y1,5,5);
+    ctx.fillRect(this.x,this.y,1,1);
+    
+}
+
+class Point1 extends Shape{
+    
+    constructor(x1,y1,color){
+        super(x1,y1,color)
+
+    }
 }
 let canvas=document.getElementById('canvas');
 let ctx=canvas.getContext("2d");
@@ -109,3 +130,6 @@ triangle.draw(ctx)
 let line=new Sector(0,0,70,70,"#ff0000")
 let point = new Point(200,100,"#ff0000")
 point.draw(ctx);
+line.draw(ctx)
+
+let point1=new Point1(10,10,'#bbbddd')
