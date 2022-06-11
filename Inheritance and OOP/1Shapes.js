@@ -5,7 +5,7 @@ function isHexaDecimal(hexaNumber){
         return false
     }
 }
-
+const _color=new WeakMap()
 
 
 
@@ -13,21 +13,24 @@ class Shape{
     constructor(x,y,color){
         this.x=x
         this.y=y
-        this.setColor(color)
-        /*if (isHexaDecimal(color)){
-            this.color=color;
-        }else{
-            throw Error('Color must be in Hexadecimal format')
-        }*/
-     
-    }
-
-    setColor(color) {
+       
         if (isHexaDecimal(color)){
-            this.color=color;
+             _color.set(this,color)
         }else{
             throw Error('Color must be in Hexadecimal format')
         }
+     
+    }
+
+    set color(value) {
+        if (isHexaDecimal(value)){
+            _color.set(this,value);
+        }else{
+            throw Error('Color must be in Hexadecimal format')
+        }
+    }
+    get color(){
+        return _color.get(this)
     }
     draw(){
         console.log('Waiting to draw')
@@ -117,18 +120,22 @@ class Point1 extends Shape{
 
     }
 }
-let canvas=document.getElementById('canvas');
-let ctx=canvas.getContext("2d");
+//let canvas=document.getElementById('canvas');
+//let ctx=canvas.getContext("2d");
 let circle=new Circle(30,30, "#120fff",10)
-circle.draw(ctx)
+
 
 let rectangle=new Rectangle(70,50,'#120fff',10,10)
-rectangle.draw(ctx);
+
 let triangle=new Triangle(0,0,30,150,50,50,"#ccc000")
-triangle.draw(ctx)
+
 let line=new Sector(0,0,70,70,"#ff0000")
 let point = new Point(200,100,"#ff0000")
-point.draw(ctx);
-line.draw(ctx)
 
-let point1=new Point1(10,10,'#bbbddd')
+/*circle.draw(ctx)
+rectangle.draw(ctx);
+//triangle.draw(ctx)
+//point.draw(ctx);
+//line.draw(ctx)*/
+
+let point1=new Point1(10,10,'#1')
