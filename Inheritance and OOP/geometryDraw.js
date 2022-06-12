@@ -58,6 +58,11 @@ class GeometryDraw{
     addFigure(){
         this.arrayOfFigures.push(this.parseForm());
     }
+    selectFigure(domElement){
+        this.initializeAllFigures()
+        
+        return Number(domElement.id)
+    }
     drawCanvas(){
         let canvas=document.getElementById(this.canvasID)
         let ctx=canvas.getContext("2d");
@@ -78,12 +83,19 @@ class GeometryDraw{
         } 
     }
 }
+
 let geoAPI=new GeometryDraw([],'canvas');
 let addButon = document.getElementById('add')
+let infoDiv=document.getElementById('information')
 console.log(`dsfhusdjhf`)
 let listenForFigureAdd=addButon.addEventListener('click',event => {
 geoAPI.addFigure()
 geoAPI.drawCanvas()
 geoAPI.initializeAllFigures()
 })
+let listenForChoice=infoDiv.addEventListener('click',event => {
+    let domElement=event.target;
+    domElement.style.color = '#ff0000'
+    geoAPI.selectFigure(domElement);
+    })
 console.log(`END!!!!`)
