@@ -199,7 +199,7 @@ Point.prototype.draw=function(ctx){
 }
 
 
-let canvas=document.getElementById('canvas');
+/*let canvas=document.getElementById('canvas');
 let ctx=canvas.getContext("2d");
 let shape=new Shape(10,15,'#120fff');
 let circle=new Circle(30,30, "#120fff",10)
@@ -216,5 +216,4 @@ circle.draw(ctx)
 rectangle.draw(ctx);
 triangle.draw(ctx)
 point.draw(ctx);
-line.draw(ctx)
-
+line.draw(ctx)*/

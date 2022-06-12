@@ -14,13 +14,13 @@
             
         </div>
         <div class="form">
-            <form method="post">
-                <select name="Shape type">
-                    <option value="point">Point</option>
-                    <option value="line" selected="selected">Line</option>
-                    <option value="triangle">Triangle</option>
-                    <option value="rectangle">Rectangle</option>
-                    <option value="circle">Circle</option>
+            <form method="post" id="form">
+                <select name="Shape type" id="type">
+                    <option value="point" id="point">Point</option>
+                    <option value="line" id="line" selected="selected">Line</option>
+                    <option value="triangle" id="triangle">Triangle</option>
+                    <option value="rectangle" id="rectangle" >Rectangle</option>
+                    <option value="circle" id="circle">Circle</option>
                   </select>
                 <input type="text" id="x1" placeholder="x1">
                 <input type="text" id="y1" placeholder="y1">
@@ -30,12 +30,17 @@
                 <input type="text" id="y3" placeholder="y3">
                 <input type="text" id="width" placeholder="width">
                 <input type="text" id="heigth" placeholder="heigth">
+                <input type="text" id="radius" placeholder="radius">
                 <input type="color" id="color">
+                <input type="button" value ="Add" id="add">
+                <input type="button" value ="Remove" id="remove">
             </form>
+            <div id="information">Figures drawn</div>
         </div>
    
     </div>
     
 </body>
 <script src="shapes.js"></script>
+<script src="geometryDraw.js"></script>
 </html>
