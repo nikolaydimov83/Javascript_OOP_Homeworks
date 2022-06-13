@@ -1,12 +1,20 @@
 let _arrayOfFigures=new WeakMap();
 let _canvasID=new WeakMap();
 let _ctx=new WeakMap();
+let _selectedFigure=new WeakMap();
 class GeometryDraw{
     
-    constructor(arrayOfFigures,canvasID){
+    constructor(arrayOfFigures,canvasID, selectedFigure='-1'){
         _arrayOfFigures.set(this,arrayOfFigures)
         _canvasID.set(this,canvasID)
+        _selectedFigure.set(this,selectedFigure)
         
+    }
+    set selectedFigure(value){
+        _selectedFigure.set(this,value) 
+    }
+    get selectedFigure(){
+        return _selectedFigure.get(this) 
     }
     set arrayOfFigures(value){
         _arrayOfFigures.set(this,value) 
@@ -58,10 +66,22 @@ class GeometryDraw{
     addFigure(){
         this.arrayOfFigures.push(this.parseForm());
     }
-    selectFigure(domElement){
+    removeFigure(){
+        let idToRemove=this.selectedFigure
+        this.arrayOfFigures.splice(Number(idToRemove),1)
+    }
+    selectFigure(domElementID){
         this.initializeAllFigures()
-        
-        return Number(domElement.id)
+        if (this.selectedFigure>=0){
+        let domElementOld=document.getElementById(this.selectedFigure);
+        domElementOld.style.color ='#000000';
+    }
+        if (domElementID!=='information'){
+            let domElement=document.getElementById(domElementID);
+            domElement.style.color = '#ff0000'
+            this.selectedFigure = Number(domElement.id)
+        }
+
     }
     drawCanvas(){
         let canvas=document.getElementById(this.canvasID)
@@ -81,11 +101,17 @@ class GeometryDraw{
             logParagraph.innerText='Type :'+this.arrayOfFigures[i].constructor.name+'Color: '+this.arrayOfFigures[i].color+`X1,Y1: ${this.arrayOfFigures[i].x1},${this.arrayOfFigures[i].y1}`
             infoDiv.appendChild(logParagraph)
         } 
+        if (this.selectedFigure>=0){
+        let domElement=document.getElementById(this.selectedFigure);
+        domElement.style.color = '#ff0000'
+        }
+
     }
 }
 
 let geoAPI=new GeometryDraw([],'canvas');
 let addButon = document.getElementById('add')
+let removeButton=document.getElementById('remove')
 let infoDiv=document.getElementById('information')
 console.log(`dsfhusdjhf`)
 let listenForFigureAdd=addButon.addEventListener('click',event => {
@@ -93,9 +119,15 @@ geoAPI.addFigure()
 geoAPI.drawCanvas()
 geoAPI.initializeAllFigures()
 })
+let listenForFigureRemove=removeButton.addEventListener('click',event=>{
+    
+    geoAPI.removeFigure();
+    geoAPI.drawCanvas()
+    geoAPI.initializeAllFigures()
+})
 let listenForChoice=infoDiv.addEventListener('click',event => {
-    let domElement=event.target;
-    domElement.style.color = '#ff0000'
-    geoAPI.selectFigure(domElement);
+    let domElementID=event.target.id;
+    
+    geoAPI.selectFigure(domElementID);
     })
 console.log(`END!!!!`)
