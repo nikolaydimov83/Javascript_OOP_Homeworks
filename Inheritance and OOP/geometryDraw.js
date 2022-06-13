@@ -28,7 +28,50 @@ class GeometryDraw{
     get canvasID(){
         return _canvasID.get(this);
     }
-   
+   makeFigurePropertiesInvisible(...resources){
+    for (let key in resources){
+        resources[key].style.visibility='hidden'
+    }
+   }
+   makeFigurePropertiesVisible(...resources){
+    for (let key in resources){
+        resources[key].style.visibility='visible'
+    }
+   }
+   visualizeForm(){
+        let x1,x2,x3,y1,y2,y3,width,heigth,color,radius,type;    
+        x1=document.getElementById('x1')
+        x2=document.getElementById('x2')
+        x3=document.getElementById('x3')
+        y1=document.getElementById('y1')
+        y2=document.getElementById('y2')
+        y3=document.getElementById('y3')
+        width=document.getElementById('width')
+        heigth=document.getElementById('heigth')
+        radius=document.getElementById('radius')
+        type=document.getElementById('type').value
+        this.makeFigurePropertiesInvisible(x1,x2,x3,y1,y2,y3,width,heigth,radius)
+        switch (type){
+            case "point":
+                this.makeFigurePropertiesVisible(x1,y1)
+            break
+            case "line":
+                this.makeFigurePropertiesVisible(x1,y1,x2,y2)
+            break
+            case "triangle":
+                this.makeFigurePropertiesVisible(x1,y1,x2,y2,x3,y3)
+            break
+            case "rectangle":
+                this.makeFigurePropertiesVisible(x1,y1,width,heigth)
+            break
+            case "circle":
+                this.makeFigurePropertiesVisible(x1,y1,radius)
+            break
+            default:
+                throw Error('Wrong figure')
+                break
+        }
+   }
     parseForm(){
         let x1,x2,x3,y1,y2,y3,width,heigth,color,radius,type;
         x1=Number(document.getElementById('x1').value)
@@ -70,6 +113,37 @@ class GeometryDraw{
         let idToRemove=this.selectedFigure
         this.arrayOfFigures.splice(Number(idToRemove),1)
     }
+    moveUpFigure(){
+        let idToMoveUp=this.selectedFigure
+        if(idToMoveUp>0){
+            let intermediateVariable=this.arrayOfFigures[Number(idToMoveUp)-1]
+            this.arrayOfFigures[Number(idToMoveUp)-1]=this.arrayOfFigures[Number(idToMoveUp)]
+            this.arrayOfFigures[Number(idToMoveUp)]=intermediateVariable;
+            this.selectedFigure=idToMoveUp-1
+        }else if(idToMoveUp===0){
+            let intermediateVariable=this.arrayOfFigures[Number(idToMoveUp)]
+            this.arrayOfFigures.shift();
+            this.arrayOfFigures.push(intermediateVariable);
+            this.selectedFigure=this.arrayOfFigures.length-1;
+        }
+
+    }
+    moveDownFigure(){
+        let idToMoveDown=this.selectedFigure
+        if(idToMoveDown<this.arrayOfFigures.length-1){
+            let intermediateVariable=this.arrayOfFigures[Number(idToMoveDown)+1]
+            this.arrayOfFigures[Number(idToMoveDown)+1]=this.arrayOfFigures[Number(idToMoveDown)]
+            this.arrayOfFigures[Number(idToMoveDown)]=intermediateVariable;
+            this.selectedFigure=idToMoveDown+1
+        }else if (idToMoveDown===this.arrayOfFigures.length-1){
+            let intermediateVariable=this.arrayOfFigures[Number(idToMoveDown)]
+            this.arrayOfFigures.pop();
+            this.arrayOfFigures.unshift(intermediateVariable);
+            this.selectedFigure=0;
+        }
+
+    }
+    
     selectFigure(domElementID){
         this.initializeAllFigures()
         if (this.selectedFigure>=0){
@@ -113,11 +187,19 @@ let geoAPI=new GeometryDraw([],'canvas');
 let addButon = document.getElementById('add')
 let removeButton=document.getElementById('remove')
 let infoDiv=document.getElementById('information')
-console.log(`dsfhusdjhf`)
+let upButton=document.getElementById('up')
+let downButton=document.getElementById('down')
+let selectFigure=document.getElementById("type")
+geoAPI.visualizeForm()
 let listenForFigureAdd=addButon.addEventListener('click',event => {
 geoAPI.addFigure()
 geoAPI.drawCanvas()
 geoAPI.initializeAllFigures()
+})
+
+let listenTypeFigure=selectFigure.addEventListener('input',event=>{
+    
+    geoAPI.visualizeForm();
 })
 let listenForFigureRemove=removeButton.addEventListener('click',event=>{
     
@@ -130,4 +212,15 @@ let listenForChoice=infoDiv.addEventListener('click',event => {
     
     geoAPI.selectFigure(domElementID);
     })
-console.log(`END!!!!`)
+let listenForMoveUp=upButton.addEventListener('click',event=>{
+    geoAPI.moveUpFigure();
+    geoAPI.drawCanvas();
+    geoAPI.initializeAllFigures();
+})
+
+let listenForMoveDown=downButton.addEventListener('click',event=>{
+    geoAPI.moveDownFigure();
+    geoAPI.drawCanvas();
+    geoAPI.initializeAllFigures();
+})
+
