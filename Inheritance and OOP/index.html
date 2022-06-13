@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="geometricApi.css">
     <title>Document</title>
 </head>
 <body>
@@ -15,6 +16,8 @@
         </div>
         <div class="form">
             <form method="post" id="form">
+                <input type="color" id="color">
+                <div class="figure-properties-wrapper" id="color-type-wrapper">
                 <select name="Shape type" id="type">
                     <option value="point" id="point">Point</option>
                     <option value="line" id="line" selected="selected">Line</option>
@@ -22,23 +25,52 @@
                     <option value="rectangle" id="rectangle" >Rectangle</option>
                     <option value="circle" id="circle">Circle</option>
                   </select>
-                <input type="text" id="x1" placeholder="x1">
-                <input type="text" id="y1" placeholder="y1">
-                <input type="text" id="x2" placeholder="x2">
-                <input type="text" id="y2" placeholder="y2">
-                <input type="text" id="x3" placeholder="x3">
-                <input type="text" id="y3" placeholder="y3">
-                <input type="text" id="width" placeholder="width">
-                <input type="text" id="heigth" placeholder="heigth">
-                <input type="text" id="radius" placeholder="radius">
-                <input type="color" id="color">
-                <input type="button" value ="Add" id="add">
-                <input type="button" value ="Remove" id="remove">
-                <input type="button" value ="Up" id="up">
-                <input type="button" value ="Down" id="down">
+                  
+                </div>
+                
+                <div class="figure-properties-wrapper" id="circle-wrapper">
+                    <input type="text" id="radius" placeholder="radius">
+                </div>
+                <div class="figure-properties-wrapper" id="x1-points-wrapper">
+                    
+                    <input type="text" id="x1" placeholder="x1">
+                    <input type="text" id="y1" placeholder="y1">
+                    
+                </div>
+                <div class="figure-properties-wrapper" id="x2-points-wrapper">
+                    <input type="text" id="x2" placeholder="x2">
+                    <input type="text" id="y2" placeholder="y2">
+                </div>
+                <div class="figure-properties-wrapper" id="x3-points-wrapper">
+                    <input type="text" id="x3" placeholder="x3">
+                    <input type="text" id="y3" placeholder="y3">
+                </div>
+                
+                <div class="figure-properties-wrapper" id="rectangle-wrapper">
+                    <input type="text" id="width" placeholder="width">
+                    <input type="text" id="heigth" placeholder="heigth">   
+                </div>
+                <div class="figure-properties-wrapper">
+                    <div id="information">Figures drawn</div>
+                </div>
+                
+                
+                <div class="up-down">
+                    <input type="button" value ="Up" id="up">
+                    <input type="button" value ="Down" id="down">
+                </div>
+                <div class="add-remove">
+                    
+                    <input type="button" value ="Add" id="add">
+                    <input type="button" value ="Remove" id="remove">
+                </div>
+
+                    
+                
+
 
             </form>
-            <div id="information">Figures drawn</div>
+            
         </div>
    
     </div>

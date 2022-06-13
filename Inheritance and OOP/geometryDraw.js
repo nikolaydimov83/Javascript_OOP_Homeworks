@@ -112,6 +112,9 @@ class GeometryDraw{
     removeFigure(){
         let idToRemove=this.selectedFigure
         this.arrayOfFigures.splice(Number(idToRemove),1)
+        
+        this.selectedFigure=-1;
+        
     }
     moveUpFigure(){
         let idToMoveUp=this.selectedFigure
@@ -169,10 +172,12 @@ class GeometryDraw{
     initializeAllFigures(){
         let infoDiv=document.getElementById('information')
         infoDiv.innerHTML=''
+        infoDiv.innerText='Figures drawn:'
         for (let i in this.arrayOfFigures){
             let logParagraph = document.createElement('p');
             logParagraph.setAttribute("id", i);
-            logParagraph.innerText='Type :'+this.arrayOfFigures[i].constructor.name+'Color: '+this.arrayOfFigures[i].color+`X1,Y1: ${this.arrayOfFigures[i].x1},${this.arrayOfFigures[i].y1}`
+
+            logParagraph.innerText='Type: '+this.arrayOfFigures[i].constructor.name+'Color: '+this.arrayOfFigures[i].color+`X1,Y1: ${this.arrayOfFigures[i].x1},${this.arrayOfFigures[i].y1}`
             infoDiv.appendChild(logParagraph)
         } 
         if (this.selectedFigure>=0){

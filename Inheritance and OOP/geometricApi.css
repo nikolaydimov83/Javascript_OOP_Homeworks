@@ -1,0 +1,43 @@
+div {
+    margin-left: 5px;
+}
+.wrapper{
+    width: fit-content;
+    border: 1px solid purple
+}
+.figure-properties-wrapper{
+    width: 90%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    
+}
+
+input{
+    width: 43%;
+    margin-left: 2%;
+    
+}
+#color{
+    width: 85%;
+    height: 25px;
+    margin-top: 5px;
+}
+#type{
+    width: 25%;
+    height: 25px;
+    margin-left: 1px;
+}
+#information{
+   min-height: 75px;
+   border: 1px solid purple;
+   padding: 2px;
+
+   
+}
+
+form{
+    width: fit-content;
+}
+.canvas{
+    width: fit-content;
+}
