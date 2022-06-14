@@ -53,11 +53,13 @@ class Shape{
         console.log('Waiting to draw')
     }
     displayObjectProperties(){
-       return {
+        let objectOfShapePropValues={
             'type':this.constructor.name,
             'x1':this.x1,
-            'y1':this.y1
+            'y1':this.y1,
+            'color':this.color
         }
+        return objectOfShapePropValues
     }
 
     set x1(value){
@@ -88,6 +90,11 @@ class Circle extends Shape{
     get radius(){
         return _radius.get(this)
     }
+    displayObjectProperties(){
+        let newObjectOfShapePropValues = super.displayObjectProperties()
+        newObjectOfShapePropValues.radius=this.radius;
+        return newObjectOfShapePropValues
+    }
 }
 Circle.prototype.draw=function(ctx){
     ctx.beginPath();
@@ -95,14 +102,7 @@ Circle.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
     ctx.fill();
 }
-Circle.prototype.displayObjectProperties=function(){
-    return {
-        'type':this.constructor.name,
-        'x1':this.x1,
-        'y1':this.y1,
-        'radius':this.radius
-    }
-}
+
 
 class Rectangle extends Shape{
     
@@ -124,21 +124,19 @@ class Rectangle extends Shape{
     get heigth(){
         return _heigth.get(this)
     }
+    displayObjectProperties(){
+        let newObjectOfShapePropValues = super.displayObjectProperties()
+        newObjectOfShapePropValues.width=this.width;
+        newObjectOfShapePropValues.heigth=this.heigth;
+        return newObjectOfShapePropValues
+    }
 }
 
 Rectangle.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x1,this.y1,this.width,this.heigth);
 }
-Rectangle.prototype.displayObjectProperties=function(){
-    return {
-        'type':this.constructor.name,
-        'x1':this.x1,
-        'y1':this.y1,
-        'width':this.width,
-        'heigth':this.heigth
-    }
-}
+
 
 class Triangle extends Shape{
     
@@ -175,6 +173,14 @@ class Triangle extends Shape{
     get y3(){
         return _y3.get(this)
     }
+    displayObjectProperties(){
+        let newObjectOfShapePropValues = super.displayObjectProperties()
+        newObjectOfShapePropValues.x2=this.x2;
+        newObjectOfShapePropValues.y2=this.y2;
+        newObjectOfShapePropValues.x3=this.x3;
+        newObjectOfShapePropValues.y3=this.y3;
+        return newObjectOfShapePropValues
+    }
 }
 
 Triangle.prototype.draw=function(ctx){
@@ -186,17 +192,7 @@ Triangle.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
     ctx.fill();
 }
-Triangle.prototype.displayObjectProperties=function(){
-    return {
-        'type':this.constructor.name,
-        'x1':this.x1,
-        'y1':this.y1,
-        'x2':this.x2,
-        'y2':this.y2,
-        'x3':this.x3,
-        'y3':this.y3
-    }
-}
+
 class Sector extends Shape{
     
     constructor(x1,y1,x2,y2,color){
@@ -216,6 +212,12 @@ class Sector extends Shape{
     get y2(){
         return _y2.get(this)
     }
+    displayObjectProperties(){
+        let newObjectOfShapePropValues = super.displayObjectProperties()
+        newObjectOfShapePropValues.x2=this.x2;
+        newObjectOfShapePropValues.y2=this.y2;
+        return newObjectOfShapePropValues
+    }
 }
 Sector.prototype.draw=function(ctx){
     ctx.beginPath();
@@ -224,15 +226,7 @@ Sector.prototype.draw=function(ctx){
     ctx.strokeStyle = this.color;
     ctx.stroke();
 }
-Sector.prototype.displayObjectProperties=function(){
-    return {
-        'type':this.constructor.name,
-        'x1':this.x1,
-        'y1':this.y1,
-        'x2':this.x2,
-        'y2':this.y2
-    }
-}
+
 class Point extends Shape{
     
     constructor(x1,y1,color){
