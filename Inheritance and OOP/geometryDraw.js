@@ -176,8 +176,10 @@ class GeometryDraw{
         for (let i in this.arrayOfFigures){
             let logParagraph = document.createElement('p');
             logParagraph.setAttribute("id", i);
-
-            logParagraph.innerText='Type: '+this.arrayOfFigures[i].constructor.name+'Color: '+this.arrayOfFigures[i].color+`X1,Y1: ${this.arrayOfFigures[i].x1},${this.arrayOfFigures[i].y1}`
+            let figurePropertyValues=this.arrayOfFigures[i].displayObjectProperties()
+            for (let j in figurePropertyValues){
+                logParagraph.innerText+=`${figurePropertyValues[j]} `
+            }
             infoDiv.appendChild(logParagraph)
         } 
         if (this.selectedFigure>=0){

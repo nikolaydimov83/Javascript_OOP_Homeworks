@@ -8,6 +8,7 @@ function isHexaDecimal(hexaNumber){
 function isPositiveNumber(number,_weakmapValue){
     if (typeof number==='number'&&number>=0){
         _weakmapValue.set(this,number)
+        
     }else{
         throw Error(`${number} must be positive Number`)
     }
@@ -22,23 +23,24 @@ const _y3=new WeakMap()
 const _radius=new WeakMap()
 const _width=new WeakMap()
 const _heigth=new WeakMap()
-
-
 class Shape{
     constructor(x1,y1,color){
+        
         isPositiveNumber.call(this,x1,_x1);
         isPositiveNumber.call(this,y1,_y1);  
-       
+
         if (isHexaDecimal(color)){
              _color.set(this,color)
+             
         }else{
             throw Error('Color must be in Hexadecimal format')
         }
      
     }
-
+    
     set color(value) {
         if (isHexaDecimal(value)){
+
             _color.set(this,value);
         }else{
             throw Error('Color must be in Hexadecimal format')
@@ -50,6 +52,14 @@ class Shape{
     draw(){
         console.log('Waiting to draw')
     }
+    displayObjectProperties(){
+       return {
+            'type':this.constructor.name,
+            'x1':this.x1,
+            'y1':this.y1
+        }
+    }
+
     set x1(value){
         isPositiveNumber(value,_x1);
     }
@@ -70,6 +80,7 @@ class Circle extends Shape{
     constructor(x1,y1,color,radius){
         super(x1,y1,color)
         isPositiveNumber.call(this,radius,_radius);
+        
     }
     set radius(value){
         isPositiveNumber.call(this,value,_radius);
@@ -83,6 +94,14 @@ Circle.prototype.draw=function(ctx){
     ctx.arc(this.x1, this.y1, this.radius, 0, 2 * Math.PI);
     ctx.fillStyle = this.color;
     ctx.fill();
+}
+Circle.prototype.displayObjectProperties=function(){
+    return {
+        'type':this.constructor.name,
+        'x1':this.x1,
+        'y1':this.y1,
+        'radius':this.radius
+    }
 }
 
 class Rectangle extends Shape{
@@ -111,6 +130,15 @@ Rectangle.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x1,this.y1,this.width,this.heigth);
 }
+Rectangle.prototype.displayObjectProperties=function(){
+    return {
+        'type':this.constructor.name,
+        'x1':this.x1,
+        'y1':this.y1,
+        'width':this.width,
+        'heigth':this.heigth
+    }
+}
 
 class Triangle extends Shape{
     
@@ -120,6 +148,7 @@ class Triangle extends Shape{
         isPositiveNumber.call(this,y2,_y2);
         isPositiveNumber.call(this,x3,_x3);
         isPositiveNumber.call(this,y3,_y3);
+
     }
     set x2(value){
         isPositiveNumber(value,_x2);
@@ -157,7 +186,17 @@ Triangle.prototype.draw=function(ctx){
     ctx.fillStyle = this.color;
     ctx.fill();
 }
-
+Triangle.prototype.displayObjectProperties=function(){
+    return {
+        'type':this.constructor.name,
+        'x1':this.x1,
+        'y1':this.y1,
+        'x2':this.x2,
+        'y2':this.y2,
+        'x3':this.x3,
+        'y3':this.y3
+    }
+}
 class Sector extends Shape{
     
     constructor(x1,y1,x2,y2,color){
@@ -185,6 +224,15 @@ Sector.prototype.draw=function(ctx){
     ctx.strokeStyle = this.color;
     ctx.stroke();
 }
+Sector.prototype.displayObjectProperties=function(){
+    return {
+        'type':this.constructor.name,
+        'x1':this.x1,
+        'y1':this.y1,
+        'x2':this.x2,
+        'y2':this.y2
+    }
+}
 class Point extends Shape{
     
     constructor(x1,y1,color){
@@ -199,22 +247,3 @@ Point.prototype.draw=function(ctx){
     
 }
 
-
-/*let canvas=document.getElementById('canvas');
-let ctx=canvas.getContext("2d");
-let shape=new Shape(10,15,'#120fff');
-let circle=new Circle(30,30, "#120fff",10)
-
-
-let rectangle=new Rectangle(70,50,'#120fff',10,10)
-
-let triangle=new Triangle(0,0,30,150,50,50,"#ccc000")
-
-let line=new Sector(0,0,70,70,"#ff0000")
-let point = new Point(200,100,"#ff0000")
-
-circle.draw(ctx)
-rectangle.draw(ctx);
-triangle.draw(ctx)
-point.draw(ctx);
-line.draw(ctx)*/
