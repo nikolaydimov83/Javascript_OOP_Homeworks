@@ -2,12 +2,14 @@ let _arrayOfFigures=new WeakMap();
 let _canvasID=new WeakMap();
 let _ctx=new WeakMap();
 let _selectedFigure=new WeakMap();
+let _figureIsBeingMovedUp=new WeakMap()
 class GeometryDraw{
     
-    constructor(arrayOfFigures,canvasID, selectedFigure='-1'){
+    constructor(arrayOfFigures,canvasID, selectedFigure='-1',figureIsBeingMovedUp=false){
         _arrayOfFigures.set(this,arrayOfFigures)
         _canvasID.set(this,canvasID)
         _selectedFigure.set(this,selectedFigure)
+        _figureIsBeingMovedUp.set(this,figureIsBeingMovedUp)
         
     }
     set selectedFigure(value){
@@ -118,6 +120,7 @@ class GeometryDraw{
     }
     moveUpFigure(){
         let idToMoveUp=this.selectedFigure
+        _figureIsBeingMovedUp.set(this,true)
         if(idToMoveUp>0){
             let intermediateVariable=this.arrayOfFigures[Number(idToMoveUp)-1]
             this.arrayOfFigures[Number(idToMoveUp)-1]=this.arrayOfFigures[Number(idToMoveUp)]
@@ -132,8 +135,9 @@ class GeometryDraw{
 
     }
     moveDownFigure(){
+        
         let idToMoveDown=this.selectedFigure
-        if(idToMoveDown<this.arrayOfFigures.length-1){
+        if(idToMoveDown>-1&&idToMoveDown<this.arrayOfFigures.length-1){
             let intermediateVariable=this.arrayOfFigures[Number(idToMoveDown)+1]
             this.arrayOfFigures[Number(idToMoveDown)+1]=this.arrayOfFigures[Number(idToMoveDown)]
             this.arrayOfFigures[Number(idToMoveDown)]=intermediateVariable;
@@ -161,12 +165,15 @@ class GeometryDraw{
 
     }
     drawCanvas(){
+       
         let canvas=document.getElementById(this.canvasID)
         let ctx=canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         for (let i in this.arrayOfFigures){
             this.arrayOfFigures[i].draw(ctx);
         }
+        
+
  
     }
     initializeAllFigures(){
