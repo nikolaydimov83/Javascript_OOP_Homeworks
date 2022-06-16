@@ -36,6 +36,8 @@ createDivPackage(){
     })
     let input=document.createElement('input');
     input.type='text';
+    input.placeholder='Type section Title...'
+    button.innerText='Add Section'
     let divWrapper=document.createElement('div');
     divWrapper.innerText=this.title;
     divWrapper.appendChild(button);
