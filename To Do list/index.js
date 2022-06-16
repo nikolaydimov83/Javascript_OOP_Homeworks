@@ -9,7 +9,7 @@ constructor(title){
 
     _arrayOfChildren.set(this,[]);
     _title.set(this,title);
-    this.createDivPackage();
+    //this.createInitialDivPackage();
 
 }
 
@@ -26,10 +26,10 @@ get divWrapper(){
     return _divWrapper.get(this)
 }
 set divWrapper(value){
-    _title.set(this,value)
+    _divWrapper.set(this,value)
 }
 
-createDivPackage(){
+createInitialDivPackage(){
     let button=document.createElement('button');
     button.addEventListener('click',ev=>{
         this.addNewElement()
@@ -46,11 +46,15 @@ createDivPackage(){
     this.assignClass(button,input,divWrapper);
     this.divWrapper=divWrapper;
     document.body.appendChild(divWrapper);
+    return divWrapper
     
 }
 addNewElement(){   
     let newTitle=document.getElementById('container').getElementsByTagName('input')[0].value
-    this.arrayOfChildren.push(new Section([],newTitle,divWrapper,this.arrayOfChildren.length));
+    let newSection= new Section(newTitle,null,this.arrayOfChildren.length)
+    newSection.divWrapper=newSection.createDivPackage()
+    this.arrayOfChildren.push(newSection);
+    document.getElementById('container').appendChild(newSection.divWrapper)
     
 }
 assignElementsClass(button,input,divWrapper){
@@ -88,12 +92,14 @@ class Section extends Container{
         return _divWrapper.get(this)
     }
     set divWrapper(value){
-        _title.set(this,value)
+        _divWrapper.set(this,value)
     }
     createDivPackage(){
         let button=document.createElement('button');
         let input=document.createElement('input');
         input.type='text';
+        input.placeholder='Type task...'
+        button.innerText='Add item'
         let checkBox=document.createElement('input')
         checkBox.type='checkbox';
         let divWrapper=document.createElement('div');
@@ -103,6 +109,7 @@ class Section extends Container{
         divWrapper.appendChild(checkBox)
         divWrapper.id=this.assignNewID();
         this.assignClass(button,input,divWrapper);
+        return divWrapper
     }
     addNewElement(){   
         let idSection=`${this.constructor.name}Child-${this.ownSiblingID}`
