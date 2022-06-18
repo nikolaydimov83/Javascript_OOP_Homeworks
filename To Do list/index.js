@@ -42,7 +42,7 @@ createInitialDivPackage(){
     let containerHeading=document.createElement('h3');
     containerHeading.innerText=this.title;
 
-    divWrapper.id='container';
+    divWrapper.id=this.assignNewID();
     this.assignClass(button,input,divWrapper);
     this.divWrapper=divWrapper;
     this.wrapElementsTodiv(containerHeading,button,input,divWrapper);
@@ -51,12 +51,13 @@ createInitialDivPackage(){
     
 }
 addNewElement(){   
-    let newTitle=document.getElementById('container').getElementsByTagName('input')[0].value;
+    let divID=this.assignNewID();
+    let newTitle=document.getElementById(divID).getElementsByTagName('input')[0].value;
     let newSiblingID=this.arrayOfChildren.length;
     let newSection= new Section(newTitle,null,newSiblingID);
     newSection.divWrapper=newSection.createDivPackage();
     this.arrayOfChildren.push(newSection);
-    document.getElementById('container').appendChild(newSection.divWrapper);
+    document.getElementById(divID).appendChild(newSection.divWrapper);
     
 }
 assignElementsClass(button,input,divWrapper){
@@ -68,6 +69,7 @@ wrapElementsTodiv(heading,button,input,divWrapper){
     divWrapper.appendChild(heading)
     divWrapper.appendChild(button);
     divWrapper.appendChild(input);
+    
     /*if(!document.getElementById(divWrapper.id)&&divWrapper){
         document.body.appendChild(divWrapper);
     }*/
