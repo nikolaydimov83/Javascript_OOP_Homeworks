@@ -2,7 +2,7 @@ let _arrayOfChildren= new WeakMap()
 let _ownSiblingID=new WeakMap()
 let _title= new WeakMap()
 let _divWrapper=new WeakMap()
-let _parent=new WeakMap()
+let _parentId=new WeakMap()
 
 
 class Container{
@@ -10,8 +10,7 @@ constructor(title){
 
     _arrayOfChildren.set(this,[]);
     _title.set(this,title);
-    //this.createInitialDivPackage();
-
+    _ownSiblingID.set(this,0);
 }
 
 get arrayOfChildren(){
@@ -30,7 +29,7 @@ set divWrapper(value){
     _divWrapper.set(this,value);
 }
 
-createDivPackage(){
+createInitialDivPackage(){
     let button=document.createElement('button');
     button.addEventListener('click',ev=>{
         this.addNewElement();
@@ -42,12 +41,11 @@ createDivPackage(){
     let divWrapper=document.createElement('div');
     let containerHeading=document.createElement('h3');
     containerHeading.innerText=this.title;
-    divWrapper.appendChild(containerHeading);
-    divWrapper.appendChild(button);
-    divWrapper.appendChild(input);
+
     divWrapper.id='container';
     this.assignClass(button,input,divWrapper);
     this.divWrapper=divWrapper;
+    this.wrapElementsTodiv(containerHeading,button,input,divWrapper);
     document.body.appendChild(divWrapper);
     return divWrapper
     
@@ -56,9 +54,8 @@ addNewElement(){
     let newTitle=document.getElementById('container').getElementsByTagName('input')[0].value;
     let newSiblingID=this.arrayOfChildren.length;
     let newSection= new Section(newTitle,null,newSiblingID);
-    this.arrayOfChildren.push(newSection);
     newSection.divWrapper=newSection.createDivPackage();
-    this.arrayOfChildren=newSection.divWrapper;
+    this.arrayOfChildren.push(newSection);
     document.getElementById('container').appendChild(newSection.divWrapper);
     
 }
@@ -67,9 +64,14 @@ assignElementsClass(button,input,divWrapper){
     input.className=this.constructor.name.toLowerCase();
     divWrapper.className=this.constructor.name.toLowerCase();
 }
-wrapElementsTodiv(button,input,divWrapper){
+wrapElementsTodiv(heading,button,input,divWrapper){
+    divWrapper.appendChild(heading)
     divWrapper.appendChild(button);
     divWrapper.appendChild(input);
+    /*if(!document.getElementById(divWrapper.id)&&divWrapper){
+        document.body.appendChild(divWrapper);
+    }*/
+    
 
 }
 assignNewID(){
@@ -85,10 +87,10 @@ assignClass(button,input,divWrapper){
 class Section extends Container{
     constructor(title,divWrapper,ownSiblingID){
           super(title)
-    _divWrapper.set(this,divWrapper);
-    //let ownSiblingID =this.arrayOfChildren.length;    
+    _divWrapper.set(this,divWrapper);   
     _ownSiblingID.set(this,ownSiblingID);
     _arrayOfChildren.set(this,[]);
+    
     }
     get ownSiblingID(){
         return _ownSiblingID.get(this);
@@ -109,16 +111,16 @@ class Section extends Container{
         input.type='text';
         input.placeholder='Type task...';
         button.innerText='Add item';
-        let checkBox=document.createElement('input');
-        checkBox.type='checkbox';
+        
         let childTitle=document.createElement('h4');
         childTitle.innerText=this.title;
         let divWrapper=document.createElement('div');
-        divWrapper.appendChild(childTitle);
+        /*divWrapper.appendChild(childTitle);
         divWrapper.appendChild(button);
-        divWrapper.appendChild(input);
-        divWrapper.appendChild(checkBox)
+        divWrapper.appendChild(input);*/
         divWrapper.id=this.assignNewID();
+        this.wrapElementsTodiv(childTitle,button,input,divWrapper)
+        
         this.assignClass(button,input,divWrapper);
         return divWrapper
     }
@@ -126,10 +128,10 @@ class Section extends Container{
         let idSection=`${this.constructor.name}Child-${this.ownSiblingID}`;
         let newTitle=document.getElementById(idSection).getElementsByTagName('input')[0].value;
         let newSiblingID=this.arrayOfChildren.length;
-        let newSection=new Item(newTitle,null,newSiblingID)
-        this.arrayOfChildren.push(newSection);
+        let parentId=this.ownSiblingID;
+        let newSection=new Item(newTitle,null,newSiblingID,parentId)
         newSection.divWrapper=newSection.createDivPackage();
-        this.arrayOfChildren=newSection.divWrapper;
+        this.arrayOfChildren.push(newSection);
         let idHolder=this.assignNewID();
         document.getElementById(idHolder).appendChild(newSection.divWrapper);
        
@@ -139,8 +141,46 @@ class Section extends Container{
 }
 
 class Item extends Section{
-    constructor(title,divWrapper,ownSiblingID){
+    constructor(title,divWrapper,ownSiblingID,parentId){
         super(title,divWrapper, ownSiblingID)
+        _parentId.set(this,parentId);
     }
+    get parentId(){
+        return _parentId.get(this);
     
+    }
+    assignNewID(){
+        return `${this.parentId}-${this.constructor.name}-${this.ownSiblingID}`;
+    }
+    createDivPackage(){
+
+        let checkBox=document.createElement('input');
+        checkBox.type='checkbox';
+        checkBox.name=this.assignNewID();
+        checkBox.id=`check-box ${this.assignNewID()}`;
+        let listenForChange=checkBox.addEventListener('change',ev=>{
+            this.checkTaskCompleted(checkBox.id)
+        })
+        let childTitle=document.createElement('label');
+        childTitle.innerText=this.title;
+        childTitle.setAttribute("for",`check-box ${this.assignNewID()}` );
+        let divWrapper=document.createElement('div');
+        
+        divWrapper.appendChild(checkBox)
+        divWrapper.appendChild(childTitle);
+        divWrapper.id=this.assignNewID();
+        
+        this.assignClass(divWrapper,checkBox,childTitle);
+        return divWrapper
+    }  
+    checkTaskCompleted(id){
+        let checkBox=document.getElementById(id)
+            if (checkBox.checked){
+                checkBox.parentNode.style.backgroundColor ='#90EE90'
+        }else{
+                checkBox.parentNode.style.backgroundColor ='#ffffff'
+        }
+    }
 }
+let a =new Container('Daily Tasks');
+a.createInitialDivPackage()
