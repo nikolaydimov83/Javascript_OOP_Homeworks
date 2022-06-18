@@ -36,8 +36,8 @@ createInitialDivPackage(){
     })
     let input=document.createElement('input');
     input.type='text';
-    input.placeholder='Type section Title...';
-    button.innerText='Add Section';
+    input.placeholder='Section Title...';
+    button.innerText='Add';
     let divWrapper=document.createElement('div');
     let containerHeading=document.createElement('h3');
     containerHeading.innerText=this.title;
@@ -69,11 +69,6 @@ wrapElementsTodiv(heading,button,input,divWrapper){
     divWrapper.appendChild(heading)
     divWrapper.appendChild(button);
     divWrapper.appendChild(input);
-    
-    /*if(!document.getElementById(divWrapper.id)&&divWrapper){
-        document.body.appendChild(divWrapper);
-    }*/
-    
 
 }
 assignNewID(){
@@ -112,14 +107,11 @@ class Section extends Container{
         let input=document.createElement('input');
         input.type='text';
         input.placeholder='Type task...';
-        button.innerText='Add item';
+        button.innerText='+';
         
         let childTitle=document.createElement('h4');
         childTitle.innerText=this.title;
         let divWrapper=document.createElement('div');
-        /*divWrapper.appendChild(childTitle);
-        divWrapper.appendChild(button);
-        divWrapper.appendChild(input);*/
         divWrapper.id=this.assignNewID();
         this.wrapElementsTodiv(childTitle,button,input,divWrapper)
         
@@ -184,5 +176,5 @@ class Item extends Section{
         }
     }
 }
-let a =new Container('Daily Tasks');
+let a =new Container('Списък със задачи на Ники');
 a.createInitialDivPackage()

@@ -1,18 +1,38 @@
-.container{
+body {
     padding: 1%;
     margin: 1%;
 }
+h3{
+    text-align: center;
+}
 div.container{
- width: 40%;
+ width: 50%;
  border: 1px solid grey;
  border-radius: 3px;
+ padding: 1%;
+ float: left;
+ text-align: right;
   
 }
 button.container{
-    width: 25%;
-    float: right;
+    width: 20%;
+
 }
 input.container{
-    width: 65%;
-    float: right;
+    width: 30%;
+}
+div.section{
+    float: left;
+    width: 90%;
+    text-align: left;
+    
+}
+h4 .section{
+    text-align: right;
+}
+div.item{
+    margin:2%;
+    text-align: left;
+    border-bottom: 1px solid grey;
+    margin-top: 3%;
 }
