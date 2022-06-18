@@ -20,7 +20,13 @@ get title(){
     return _title.get(this)
 }
 set title(value){
-    _title.set(this,value);
+    if (typeof(value)==="string"&&typeof(value)==="number"){
+        _title.set(this,value);
+    }
+    else{
+        throw new Error('You are trying to input title in wrong format')
+    }
+    
 }
 get divWrapper(){
     return _divWrapper.get(this)
