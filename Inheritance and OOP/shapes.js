@@ -2,15 +2,24 @@ function isHexaDecimal(hexaNumber){
     if (hexaNumber.length===7&&hexaNumber.match(/#[a-f0-9A-F]{6}/)){
         return true
     }else{
-        return false
+        
+        throw new TypeError('Color must be in Hexadecimal format')
     }
 }
 function isPositiveNumber(number,_weakmapValue){
     if (typeof number==='number'&&number>=0){
         _weakmapValue.set(this,number)
         
-    }else{
-        throw Error(`${number} must be positive Number`)
+    }else if (typeof number==='string'){
+        throw {message:'The input cannot be string. Please provide positive tumber',
+                errorType:'wrongFormatNumericProperties',
+                coderStuff:new TypeError('Wrong color') 
+            }
+    } else if (number<0){
+        throw {message:'The input cannot be a negative number. Please provide positive tumber',
+        errorType:'wrongRange',
+        coderStuff:new TypeError('Wrong color')  
+        }
     }
 }
 const _color=new WeakMap()
@@ -33,7 +42,10 @@ class Shape{
              _color.set(this,color)
              
         }else{
-            throw Error('Color must be in Hexadecimal format')
+            throw {message:'Color must be in Hexadecimal format',
+                    errorType:'WrongColorFormat',
+                    coderStuff:new TypeError('Wrong color')   
+        }
         }
      
     }

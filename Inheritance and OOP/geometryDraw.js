@@ -87,26 +87,36 @@ class GeometryDraw{
         color=document.getElementById('color').value
         radius=Number(document.getElementById('radius').value)
         type=document.getElementById('type').value
-        switch (type){
-            case "point":
-                return new Point(x1,y1,color)
-            break
-            case "line":
-                return new Sector(x1,y1,x2,y2,color)
-            break
-            case "triangle":
-                return new Triangle(x1,y1,x2,y2,x3,y3,color)
-            break
-            case "rectangle":
-                return new Rectangle(x1,y1,color,width,heigth)
-            break
-            case "circle":
-                return new Circle(x1,y1,color,radius)
-            break
-            default:
-                throw Error('Wrong figure')
+        try{
+            switch (type){
+                case "point":
+                    return new Point(x1,y1,color)
                 break
+                case "line":
+                    return new Sector(x1,y1,x2,y2,color)
+                break
+                case "triangle":
+                    return new Triangle(x1,y1,x2,y2,x3,y3,color)
+                break
+                case "rectangle":
+                    return new Rectangle(x1,y1,color,width,heigth)
+                break
+                case "circle":
+                    return new Circle(x1,y1,color,radius)
+                break
+                default:
+                    throw TypeError('Wrong figure')
+                    break
+            }
+        } catch(er){
+            
+            let errorDiv=document.createElement('div');
+            document.body.appendChild(errorDiv);
+            errorDiv.innerText=er.coderStuff.stack;
+            
+            throw Error('Aborted')
         }
+
     }
     addFigure(){
         this.arrayOfFigures.push(this.parseForm());
