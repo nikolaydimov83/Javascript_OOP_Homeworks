@@ -1,17 +1,27 @@
-let _name=new WeakMap;
-let _area=new WeakMap;
-let _location=new WeakMap;
-let _isFurnitured=new WeakMap;
-let _rooms=new WeakMap;
-let _hasElevator=new WeakMap;
-let _floors=new WeakMap;
-let _width=new WeakMap;
-let _heigth=new WeakMap;
-let _estate=new WeakMap;
-let _price=new WeakMap
-let _arrayOfEstates = new WeakMap;
-let _arrayOfSalesOffers=new WeakMap;
-let _arrayOfRentOffers=new WeakMap;
+let _name=new WeakMap();
+let _area=new WeakMap();
+let _location=new WeakMap();
+let _isFurnitured=new WeakMap();
+let _rooms=new WeakMap();
+let _hasElevator=new WeakMap();
+let _floors=new WeakMap();
+let _width=new WeakMap();
+let _heigth=new WeakMap();
+let _estate=new WeakMap();
+let _price=new WeakMap();
+let _arrayOfEstates = new WeakMap();
+let _arrayOfSalesOffers=new WeakMap();
+let _arrayOfRentOffers=new WeakMap();
+let _statusLog=new WeakMap();
+
+function logText(input){
+    if (input instanceof Estate){
+        return `created ${input.constructor.name} with unique ID: ${input.name}`
+    }else{
+        return `created ${input.constructor.name} with unique ID: ${input.estate.name}`
+    }
+    
+}
 function checkInputIsNumberInRng(input,start,end){
 if (typeof input==='number'&&start<=input&&input<=end&&Number.isInteger(input)){
     return true
@@ -39,6 +49,7 @@ function parseBoolianInput(input) {
     }
     else{throw new TypeError('The input must be either "true" or "false"');}
 }
+
 
 
 class Estate{
@@ -224,37 +235,113 @@ class Engine{
         _arrayOfEstates.set(this,[]);
         _arrayOfRentOffers.set(this,[]);
         _arrayOfSalesOffers.set(this,[]);
-       
+        _statusLog.set(this,[]);
     }
 
-    ;
-    get _arrayOfRentOffers(){
-        return _arrayOfRentOffers.get(this);
-    }
     get _arrayOfSalesOffers(){
         return _arrayOfSalesOffers.get(this);
     }
     createApartment(name,area,location,isFurnitured,numberOfRooms,hasElevator){
         let newApartment=new Apartment(name,area,location,isFurnitured,numberOfRooms,hasElevator)
-        _arrayOfEstates.get(this).push(newApartment);
-        console.log(_arrayOfEstates.get(this));
+        this.checkIfEstateIsInArrayByNameAndPush(newApartment,_arrayOfEstates);
     }
 
     createOffice (name,area,location,isFurnitured,numberOfRooms,hasElevator){
     let newOffice=new Office(name,area,location,isFurnitured,numberOfRooms,hasElevator);
-    _arrayOfEstates.get(this).push(newOffice);
+    this.checkIfEstateIsInArrayByNameAndPush(newOffice,_arrayOfEstates);
     }
     createHouse (name, area, location, isFurnitured, numberOfFloors){
         let newHouse=new House(name,area,location,isFurnitured,numberOfFloors);
-        _arrayOfEstates.get(this).push(newHouse);
+        this.checkIfEstateIsInArrayByNameAndPush(newHouse,_arrayOfEstates);
     }
     createGarage (name,area,location,isFurnitured,width,height){
         let newGarage=new Garage(name,area,location,isFurnitured,width,height);
-        _arrayOfEstates.get(this).push(newGarage);
+        this.checkIfEstateIsInArrayByNameAndPush(newGarage,_arrayOfEstates);
+    }
+    changeNameOfObjectInArrayOfEstatesByIndex(index,newValue){
+        if (checkInputIsString(newValue)&&_arrayOfEstates.get(this).length>index){
+            _arrayOfEstates.get(this)[index].name=newValue;
+        }
+        
+    }
+    
+    checkIfEstateIsInArrayByNameAndPush(estate,_array){
+    
+        if (!(this.findEstateByName(estate.name))){
+        let string=logText(estate);
+        _statusLog.get(this).push(string);
+        _array.get(this).push(estate);
+    }else{
+        _statusLog.get(this).push(`Unccessfully tried to create ${estate.constructor.name} with name:${estate.name}. Estate with this name already exists`);
+        throw new ReferenceError('You already have estate with that unique name. Please choose another name')
+    }
+    }
+    findEstateByName(estateName){
+        let arrayOfEstates=this.getArrayOfEstates();
+        let foundEstate=[]
+        for (const key in arrayOfEstates) {
+            if (Object.hasOwnProperty.call(arrayOfEstates, key)) {
+                const element = arrayOfEstates[key];
+                if (element.name===estateName){
+                    foundEstate.push(element);
+                }
+                
+            }
+        }
+        
+        return foundEstate[0];
+    }
+    createRentOffer (estateName, rentPrice){
+        let estate=this.findEstateByName(estateName);
+        if (estate){
+            let offer=new SaleOffer(estate,rentPrice);
+            let string=logText(offer);
+            _statusLog.get(this).push(string);
+            _arrayOfRentOffers.get(this).push(offer);
+        } else{
+            _statusLog.get(this).push(`Unccessfully tried to create rent offer with name:${estateName}. Estate with this name not present in estates DBase`)
+            throw new RangeError('There is no property with such name in database');
+        }
+    }
+    createSalesOffer (estateName, salePrice){
+        let estate=this.findEstateByName(estateName);
+        if (estate){
+            let offer=new SaleOffer(estate,salePrice);
+            let string=logText(offer);
+            _statusLog.get(this).push(string);
+            _arrayOfSalesOffers.get(this).push(offer);
+        } else{
+            _statusLog.get(this).push(`Unccessfully tried to create sale offer with name:${estateName}. Estate with this name not present in estates DBase`)
+            throw new RangeError('There is no property with such name in database');
+        }
+    }
+    getArrayOfEstates(){
+        return _arrayOfEstates.get(this);
+        
+    }
+    getArrayOfRentOffers(){
+        return _arrayOfRentOffers.get(this)
+    }
+    getArrayOfSalesOffers(){
+        return _arrayOfSalesOffers.get(this)
+    }
+    status(){
+        return _statusLog.get(this);
     }
 }
 
 let apartment=new Apartment('Dream Apartment',58,'Lyulin','true',2,'true');
 let house=new House('Dream House',120,'Kambanite','true',2);
 let engine=new Engine();
+engine.createOffice('office1',26,'Shtraklevo','true',3,'true');
+engine.createHouse('house1',123,'mladost','true',3);
+engine.createGarage('garage1',23,'mladost','true',80,70);
+engine.createApartment('ap1',56,'lyulin','true',2,'true')
+engine.createOffice('office2',26,'Shtraklevo','true',3,'true');
+engine.createRentOffer('garage59',100);
+engine.createSalesOffer('ap1',100000);
+
+let arr1=engine.getArrayOfRentOffers();
+let arr2=engine.getArrayOfSalesOffers();
+console.log(engine.status());
 
