@@ -328,20 +328,54 @@ class Engine{
     status(){
         return _statusLog.get(this);
     }
+    getSalesOffersByLocation(location){
+        let arrayOfSales=[];
+        _arrayOfSalesOffers.get(this).forEach(sale => {if (sale.estate.location===location){arrayOfSales.push(sale)}
+        arrayOfSales.sort(function(a,b){
+            if(a.estate.name>b.estate.name){return 1}
+            if(a.estate.name<b.estate.name){return -1}
+            return 0;
+        })
+        });
+        return arrayOfSales
+    }
+    getRentOffersByLocation(location){
+        let arrayOfRent=[];
+        _arrayOfRentOffers.get(this).forEach(sale => {if (sale.estate.location===location){arrayOfRent.push(sale)}
+        arrayOfRent.sort(function(a,b){
+            if(a.estate.name>b.estate.name){return 1}
+            if(a.estate.name<b.estate.name){return -1}
+            return 0;
+        })
+        });
+        return arrayOfRent
+    }
 }
 
 let apartment=new Apartment('Dream Apartment',58,'Lyulin','true',2,'true');
 let house=new House('Dream House',120,'Kambanite','true',2);
 let engine=new Engine();
-engine.createOffice('office1',26,'Shtraklevo','true',3,'true');
+engine.createOffice('office1',26,'Lyulin','true',3,'true');
 engine.createHouse('house1',123,'mladost','true',3);
 engine.createGarage('garage1',23,'mladost','true',80,70);
-engine.createApartment('ap1',56,'lyulin','true',2,'true')
-engine.createOffice('office2',26,'Shtraklevo','true',3,'true');
-engine.createRentOffer('garage59',100);
+engine.createApartment('ap1',56,'Lyulin','true',2,'true')
+engine.createOffice('office2',26,'Lyulin','true',3,'true');
+engine.createOffice('z',26,'Lyulin','true',3,'true');
+engine.createRentOffer('garage1',100);
+
+engine.createSalesOffer('office1',100000);
+engine.createSalesOffer('office2',100000);
 engine.createSalesOffer('ap1',100000);
+engine.createSalesOffer('house1',100000);
+
+engine.createRentOffer('z',100000);
+engine.createRentOffer('office1',100000);
+engine.createRentOffer('office2',100000);
+engine.createRentOffer('ap1',100000);
+engine.createRentOffer('house1',100000);
+
 
 let arr1=engine.getArrayOfRentOffers();
 let arr2=engine.getArrayOfSalesOffers();
-console.log(engine.status());
+engine.getRentOffersByLocation('Lyulin').forEach(sale=>{console.log(sale.estate.name)});
 
