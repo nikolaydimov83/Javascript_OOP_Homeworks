@@ -342,14 +342,32 @@ class Engine{
     getRentOffersByLocation(location){
         let arrayOfRent=[];
         _arrayOfRentOffers.get(this).forEach(sale => {if (sale.estate.location===location){arrayOfRent.push(sale)}
+        });
         arrayOfRent.sort(function(a,b){
             if(a.estate.name>b.estate.name){return 1}
             if(a.estate.name<b.estate.name){return -1}
             return 0;
         })
-        });
         return arrayOfRent
     }
+    findRentsByPrice(minPrice,maxPrice){
+        let arrayOfRent=[];
+        _arrayOfRentOffers.get(this).forEach(sale => {if (sale.price>=minPrice&&sale.price<=maxPrice){
+            arrayOfRent.push(sale)
+        }
+        });
+        arrayOfRent.sort(function(a,b){
+            
+            if(a.price===b.price){
+                if(a.estate.name>b.estate.name){return 1}
+                if(a.estate.name<b.estate.name){return -1}
+                return 0;
+            }else{
+                return a.price-b.price;
+            }
+        });
+        return arrayOfRent;
+    } 
 }
 
 let apartment=new Apartment('Dream Apartment',58,'Lyulin','true',2,'true');
@@ -368,9 +386,9 @@ engine.createSalesOffer('office2',100000);
 engine.createSalesOffer('ap1',100000);
 engine.createSalesOffer('house1',100000);
 
-engine.createRentOffer('z',100000);
-engine.createRentOffer('office1',100000);
-engine.createRentOffer('office2',100000);
+engine.createRentOffer('z',100);
+engine.createRentOffer('office1',300);
+engine.createRentOffer('office2',800);
 engine.createRentOffer('ap1',100000);
 engine.createRentOffer('house1',100000);
 
@@ -378,4 +396,5 @@ engine.createRentOffer('house1',100000);
 let arr1=engine.getArrayOfRentOffers();
 let arr2=engine.getArrayOfSalesOffers();
 engine.getRentOffersByLocation('Lyulin').forEach(sale=>{console.log(sale.estate.name)});
+engine.findRentsByPrice(100,800).forEach(sale=>{console.log(sale.estate.name)});
 
