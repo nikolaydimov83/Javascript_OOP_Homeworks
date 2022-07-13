@@ -54,6 +54,9 @@ function parseBoolianInput(input) {
 
 class Estate{
     constructor(name,area,location,isFurnitured){
+        if(this.constructor === Estate||this.constructor===BuildingEstate){
+            throw new Error("FYI: Instance of Abstract class cannot be instantiated")
+        }
         if(checkInputIsString(name)){
             _name.set(this,name);
         }
@@ -397,4 +400,6 @@ let arr1=engine.getArrayOfRentOffers();
 let arr2=engine.getArrayOfSalesOffers();
 engine.getRentOffersByLocation('Lyulin').forEach(sale=>{console.log(sale.estate.name)});
 engine.findRentsByPrice(100,800).forEach(sale=>{console.log(sale.estate.name)});
+let a=new BuildingEstate('hi',56,'Lyulin','true',3,'true');
+
 

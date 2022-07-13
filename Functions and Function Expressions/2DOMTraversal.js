@@ -38,7 +38,7 @@ function getParsedByQuerySelector(){
     for (let i of htmlDoc){
     parsedText+=elementTraversal(i,'')
 }
-console.log(parsedText)
+
 return parsedText;
 }
 return {
