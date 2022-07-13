@@ -1,8 +1,8 @@
-let _arrayOfChildren= new WeakMap()
-let _ownSiblingID=new WeakMap()
-let _title= new WeakMap()
-let _divWrapper=new WeakMap()
-let _parentId=new WeakMap()
+let _arrayOfChildren= new WeakMap();
+let _ownSiblingID=new WeakMap();
+let _title= new WeakMap();
+let _divWrapper=new WeakMap();
+let _parentId=new WeakMap();
 
 
 class Container{
@@ -166,7 +166,7 @@ class Item extends Section{
         childTitle.setAttribute("for",`check-box ${this.assignNewID()}` );
         let divWrapper=document.createElement('div');
         
-        divWrapper.appendChild(checkBox)
+        divWrapper.appendChild(checkBox);
         divWrapper.appendChild(childTitle);
         divWrapper.id=this.assignNewID();
         
