@@ -18,7 +18,7 @@ let specialConsole=(function(){
         for (let i in arraySplitByPlaceholders){
             arraySplitByPlaceholders[i]+=arrayOfPlaceholderTexts1[i];
         }
-        console.log(arraySplitByPlaceholders.join(''));
+       
         return arraySplitByPlaceholders.join('');
         }
         else{
