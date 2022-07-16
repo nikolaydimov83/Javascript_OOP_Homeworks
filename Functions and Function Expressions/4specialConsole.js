@@ -11,7 +11,7 @@ let specialConsole=(function(){
         }
         if (textToPrint.search(/{[0-9]+}/)!==-1){
         let arraySplitByPlaceholders=textToPrint.split(/{[0-9]+}/gi)
-        arraySplitByPlaceholders=arraySplitByPlaceholders.filter(function(x){return x!==""})
+        arraySplitByPlaceholders=arraySplitByPlaceholders.filter(function(x){return x!==""});
         if(arraySplitByPlaceholders.length!==arrayOfPlaceholderTexts1.length){
             throw Error('Placeholders in text and place holder arguments in function are different!');
         }
