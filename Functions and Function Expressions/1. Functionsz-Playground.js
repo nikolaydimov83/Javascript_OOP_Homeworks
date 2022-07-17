@@ -6,9 +6,9 @@ function wrapperFunction(){
         ar1Type=typeof ar1;
         ar2Type=typeof ar2;
         ar3Type=typeof ar3;
-        console.log(`Type argument1 `+ar1Type)
-        console.log(`Type argument2 `+ar2Type)
-        console.log(`Type argument3 `+ar3Type)
+        console.log(`Type argument1 `+ar1Type);
+        console.log(`Type argument2 `+ar2Type);
+        console.log(`Type argument3 `+ar3Type);
         console.log(this.ar1)
         
     }
@@ -17,9 +17,9 @@ function wrapperFunction(){
 
 let b=new wrapperFunction()
 b.ar1=777
-console.log(`Before`+b.ar1)
-wrapperFunction.call(b,[])
-console.log(`After`+b.ar1)
+console.log(`Before`+b.ar1);
+wrapperFunction.call(b,[]);
+console.log(`After`+b.ar1);
 
 function privateArguments(a,b,c){
     let privateArgument1;
