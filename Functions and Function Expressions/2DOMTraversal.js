@@ -17,14 +17,14 @@ function textToPrint(element,blankspace){
 
 function elementTraversal(element,blankspace){
     let newBlankspace;
-    let arrayOfChildren=element.childNodes
+    let arrayOfChildren=element.childNodes;
     
     for (let child of arrayOfChildren){
         if (child.tagName){
             parsedText+=textToPrint(child,blankspace)+`
 `;
         
-            newBlankspace=' '+blankspace
+            newBlankspace=' '+blankspace;
         }
         
         elementTraversal(child,newBlankspace);
@@ -36,10 +36,10 @@ function getParsedByQuerySelector(){
     
     parsedText='';
     for (let i of htmlDoc){
-    parsedText+=elementTraversal(i,'')
+    parsedText+=elementTraversal(i,'');
 }
 
-return parsedText;
+return parsedText
 }
 return {
     getParsedByQuerySelector: getParsedByQuerySelector
