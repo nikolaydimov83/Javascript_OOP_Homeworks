@@ -1,6 +1,6 @@
 function wrapperFunction(){
     function playWithFunctions(ar1,ar2,ar3){
-        this.ar1=555
+        this.ar1=555;
         console.log(`Number of arguments accepted by the Function: `+playWithFunctions.length);
         console.log('Array with arguments actually loaded: '+playWithFunctions.arguments)
         ar1Type=typeof ar1;
