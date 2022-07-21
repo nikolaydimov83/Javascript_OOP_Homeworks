@@ -22,7 +22,7 @@ let specialConsole=(function(){
         return arraySplitByPlaceholders.join('');
         }
         else{
-            console.log(textToPrint)
+            console.log(textToPrint);
             return textToPrint
         } 
 
