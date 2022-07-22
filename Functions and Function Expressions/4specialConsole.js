@@ -19,7 +19,7 @@ let specialConsole=(function(){
             arraySplitByPlaceholders[i]+=arrayOfPlaceholderTexts1[i];
         }
        
-        return arraySplitByPlaceholders.join('');
+        return arraySplitByPlaceholders.join('')
         }
         else{
             console.log(textToPrint);
