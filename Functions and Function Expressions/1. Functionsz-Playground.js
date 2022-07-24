@@ -12,7 +12,7 @@ function wrapperFunction(){
         console.log(this.ar1)
         
     }
-    playWithFunctions.call()
+    playWithFunctions.call();
 }
 
 let b=new wrapperFunction()
