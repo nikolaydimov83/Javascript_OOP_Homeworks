@@ -15,7 +15,7 @@ function wrapperFunction(){
     playWithFunctions.call();
 }
 
-let b=new wrapperFunction()
+let b=new wrapperFunction();
 b.ar1=777;
 console.log(`Before`+b.ar1);
 wrapperFunction.call(b,[]);
